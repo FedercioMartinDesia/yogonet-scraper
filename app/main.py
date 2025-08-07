@@ -18,14 +18,18 @@ def main():
     
     # Extraer datos
     scraped_data = scrape_news_data(news_url)
-    print("Datos extraídos:", scraped_data)   
+    print("Datos extraídos:", scraped_data)   # <--- LOG
 
     # Procesar datos con pandas (la función nueva)
     processed_data = process_news_data(scraped_data)
-    print("Datos procesados:", processed_data)  
+    print("Datos procesados:", processed_data)  # <--- LOG
 
     # Cargar (o mock) en BigQuery
     insert_row_to_bigquery(processed_data)
+    print("✅ Datos cargados en BigQuery correctamente.")  # <--- LOG
+
+    print("Fin del proceso.")  # <--- LOG
 
 if __name__ == "__main__":
     main()
+

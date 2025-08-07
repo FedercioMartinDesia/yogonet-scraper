@@ -10,14 +10,18 @@ def insert_row_to_bigquery(row_data):
     client = bigquery.Client(project=project_id)
     table_ref = f"{project_id}.{dataset_id}.{table_id}"
 
-    df = pd.DataFrame([row_data])
+    try:
+        df = pd.DataFrame([row_data])
 
-    # Convertir a tipos compatibles
-    df["title_word_count"] = df["title_word_count"].astype(int)
-    df["title_char_count"] = df["title_char_count"].astype(int)
-    df["title_capitalized_words"] = df["title_capitalized_words"].apply(json.dumps)  # o ', '.join(x) si preferis
+        # Convertir a tipos compatibles
+        df["title_word_count"] = df["title_word_count"].astype(int)
+        df["title_char_count"] = df["title_char_count"].astype(int)
+        df["title_capitalized_words"] = df["title_capitalized_words"].apply(json.dumps)  # o ', '.join(x) si preferís
 
-    job = client.load_table_from_dataframe(df, table_ref)
-    job.result()
+        job = client.load_table_from_dataframe(df, table_ref)
+        job.result()
 
-    print(f"Fila insertada correctamente en {table_ref} con método batch.")
+        print(f"✅ Fila insertada correctamente en {table_ref} con método batch.")
+        print(f"Datos insertados: {df.to_dict(orient='records')[0]}")
+    except Exception as e:
+        print(f"❌ Error al insertar datos en BigQuery: {e}")
