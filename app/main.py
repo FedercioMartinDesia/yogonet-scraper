@@ -1,3 +1,13 @@
+import os
+
+# --- Manejo seguro de la key desde env ---
+if "GCP_CREDS_JSON" in os.environ:
+    creds_path = "/tmp/creds.json"
+    with open(creds_path, "w") as f:
+        f.write(os.environ["GCP_CREDS_JSON"])
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = creds_path
+
+
 from scraper import scrape_news_data
 from processor import process_news_data
 from bq_loader import insert_row_to_bigquery
