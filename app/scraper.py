@@ -26,11 +26,14 @@ except KeyError:
     sys.exit(1)
 
 # --- Config Claude ---
-try:
-    claude = anthropic.Client(os.environ["ANTHROPIC_API_KEY"])
-except KeyError:
-    claude = None
+
+claude = None
+if "ANTHROPIC_API_KEY" in os.environ:
+    claude = anthropic.Client()               
+    claude.api_key = os.environ["ANTHROPIC_API_KEY"]
+else:
     logger.warning("ANTHROPIC_API_KEY no configurada, salto fallback a Claude")
+
 
 def fetch_html(url: str, timeout: int = 5) -> str:
     try:
