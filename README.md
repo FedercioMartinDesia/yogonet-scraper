@@ -85,6 +85,18 @@ gcloud run deploy tu-servicio --image gcr.io/tu-proyecto/tu-imagen --platform ma
 
 
 ---
+### ¿Cómo cambiar la URL de la noticia a scrapear?
+
+Por defecto, la URL de la noticia a scrapear está definida en app/main.py en la variable news_url.
+Puedes editar ese valor antes de correr el script para probar diferentes noticias de Yogonet.
+
+Si deseas hacer el scraper interactivo, reemplaza la línea:
+```
+news_url = "https://www.yogonet.com/international/news/....."
+
+```
+
+---
 
 ### ⚙️ Dependencias clave
 
@@ -94,5 +106,6 @@ El proyecto se basa en las siguientes librerías de Python:
 * `openai`: Para la selección dinámica de campos con GPT-4o.
 * `pandas`, `pyarrow`, `pandas-gbq`: Para el procesamiento de datos y la carga en BigQuery.
 * `google-cloud-bigquery`: Para la conexión y la gestión de BigQuery.
+
 
 
