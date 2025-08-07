@@ -185,7 +185,7 @@ To start this project, you will need the following:
 * An OpenAI API Key (GPT-4o).
 * A Railway account (it's free, no credit card required).
 
-#### 2. Configuración de variables de entorno
+#### 2. Setting environment variables
 
 You must set two environment variables for the project to work:
 
@@ -286,6 +286,7 @@ The code uses the OpenAI "gpt-4o" and Claude "claude-2.1" model.
 This happens if you exceeded the Openai or Claude quota, you must upgrade the plan.
 
 ---
+
 
 
 
