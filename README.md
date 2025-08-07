@@ -6,6 +6,9 @@ Este proyecto automatiza el scraping de noticias de Yogonet utilizando un enfoqu
 - **Arquitectura desacoplada:** todo corre en Docker, se puede adaptar a Cloud Run.
 
 ---
+Chat con el que se trabajo:
+* https://chatgpt.com/share/6895028e-a9cc-8000-8446-3d7429ac2086
+---
 
 ## 📂 Estructura del proyecto
 
@@ -135,6 +138,7 @@ El código utiliza el modelo de OpenAI "gpt-4o" y Claude "claude-2.1".
 ### Error 429 "You exceeded your current quota, please check your plan and billing details".
 
 Esto sucede si excediste la cuota de Openai o Claude, debes mejorar el plan.
+
 
 
 
