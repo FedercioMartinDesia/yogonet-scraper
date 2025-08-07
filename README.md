@@ -107,17 +107,23 @@ news_url = "https://www.yogonet.com/international/news/....."
 
 ### ⚙️ Dependencias clave
 
+Para instalar, ejecuta: 
+```
+pip install -r requirements.txt
+```
+
 El proyecto se basa en las siguientes librerías de Python:
 
-| Paquete                  | Descripción                                          |
-|--------------------------|------------------------------------------------------|
-| `requests`               | Descarga de HTML desde la web.                       |
-| `beautifulsoup4`         | Parseo y extracción de datos de HTML.                |
-| `openai`                 | Interacción con GPT-4o para extracción dinámica.     |
-| `pandas`                 | Procesamiento y transformación de datos.             |
-| `pyarrow`                | Serialización de DataFrames y compatibilidad con BQ. |
-| `pandas-gbq`             | Carga de DataFrames directamente en BigQuery.        |
-| `google-cloud-bigquery`  | Cliente oficial para gestión de tablas en BigQuery.  |
+| Paquete                  | Descripción                                             |
+|--------------------------|---------------------------------------------------------|
+| `requests`               | Descarga de HTML desde la web.                          |
+| `beautifulsoup4`         | Parseo y extracción de datos de HTML.                   |
+| `openai`                 | Interacción con GPT-4o para extracción dinámica.        |
+| `anthropic`              | Interacción con Claude para fallback cuando GPT no funcione. |
+| `pandas`                 | Procesamiento y transformación de datos.                |
+| `pyarrow`                | Serialización de DataFrames y compatibilidad con BQ.    |
+| `pandas-gbq`             | Carga de DataFrames directamente en BigQuery.           |
+| `google-cloud-bigquery`  | Cliente oficial para gestión de tablas en BigQuery.     |
 
 ---
 ### Modelo
@@ -129,6 +135,7 @@ El código utiliza el modelo de OpenAI "gpt-4o" y Claude "claude-2.1".
 ### Error 429 "You exceeded your current quota, please check your plan and billing details".
 
 Esto sucede si excediste la cuota de Openai o Claude, debes mejorar el plan.
+
 
 
 
