@@ -142,15 +142,7 @@ Esto sucede si excediste la cuota de Openai o Claude, debes mejorar el plan.
 
 
 
----------------
-
-
-
-
-
-
-
-
+(___)
 
 ## 📰 Yogonet Scraper – IA + Python + BigQuery + Railway English
 
@@ -294,6 +286,7 @@ The code uses the OpenAI "gpt-4o" and Claude "claude-2.1" model.
 This happens if you exceeded the Openai or Claude quota, you must upgrade the plan.
 
 ---
+
 
 
 
