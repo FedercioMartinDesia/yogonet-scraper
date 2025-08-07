@@ -41,7 +41,8 @@ Debes configurar dos variables de entorno para que el proyecto funcione:
 
 * **`GCP_CREDS_JSON`**: El contenido completo de tu archivo JSON de credenciales de Google Cloud (Service Account).
 * **`OPENAI_API_KEY`**: Tu API Key de OpenAI.
-
+* **`ANTHROPIC_API_KEY`**: Tu API Key de Claude.
+  
 Estas variables se cargan en la configuración de Railway.
 
 <img width="829" height="228" alt="image" src="https://github.com/user-attachments/assets/cc8041c9-7ae4-440c-b2ae-a582f3c375ea" />
@@ -116,13 +117,14 @@ El proyecto se basa en las siguientes librerías de Python:
 ---
 ### Modelo
 
-El código utiliza el modelo de OpenAI "gpt-4o"
+El código utiliza el modelo de OpenAI "gpt-4o" y Claude "claude-2.1".
 
 ---
 
 ### Error 429 "You exceeded your current quota, please check your plan and billing details".
 
-Esto sucede si excediste la cuota de chatgpt, debes mejorar el plan.
+Esto sucede si excediste la cuota de Openai o Claude, debes mejorar el plan.
+
 
 
 
