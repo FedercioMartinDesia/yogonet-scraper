@@ -42,7 +42,7 @@ def fetch_html(url: str, timeout: int = 5) -> str:
 
 def ai_select_fields(news_html: str, url: str) -> dict | None:
     """
-    Usa gpt-3.5-turbo para identificar dinámicamente los campos relevantes en el HTML de una noticia.
+    Usa gpt-4o para identificar dinámicamente los campos relevantes en el HTML de una noticia.
     Devuelve un dict con las claves: "title", "kicker", "link", "image_url".
     Si falta alguna clave, se asigna None. Retorna None en caso de error.
     """
@@ -71,7 +71,7 @@ def ai_select_fields(news_html: str, url: str) -> dict | None:
     for attempt in range(3):
         try:
             resp = openai.chat.completions.create(
-                model="gpt-3.5-turbo",
+                model="gpt-4o",
                 messages=[
                     {"role": "system", "content": "Eres un asistente experto en análisis de HTML para extracción de datos."},
                     {"role": "user", "content": prompt}
