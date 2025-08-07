@@ -7,8 +7,10 @@ import json
 import requests
 from requests.exceptions import RequestException
 import openai
+import anthropic                             # pip install anthropic
+from bs4 import BeautifulSoup                # pip install beautifulsoup4
 
-# Configuración de logging
+# --- Logging ---
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(message)s",
@@ -16,21 +18,21 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# Configura tu API Key de OpenAI desde la variable de entorno
+# --- Config OpenAI ---
 try:
-    openai.api_key = os.environ.get("OPENAI_API_KEY")
-    if not openai.api_key:
-        raise ValueError("La variable de entorno OPENAI_API_KEY no está configurada.")
-except ValueError as e:
-    logger.error("Error de configuración: %s", e)
+    openai.api_key = os.environ["OPENAI_API_KEY"]
+except KeyError:
+    logger.error("OPENAI_API_KEY no configurada")
     sys.exit(1)
 
+# --- Config Claude ---
+try:
+    claude = anthropic.Client(os.environ["ANTHROPIC_API_KEY"])
+except KeyError:
+    claude = None
+    logger.warning("ANTHROPIC_API_KEY no configurada, salto fallback a Claude")
 
 def fetch_html(url: str, timeout: int = 5) -> str:
-    """
-    Descarga el HTML de la URL usando requests, con manejo de errores y timeout.
-    Devuelve el texto HTML o cadena vacía en caso de error.
-    """
     try:
         resp = requests.get(url, timeout=timeout)
         resp.raise_for_status()
@@ -39,77 +41,94 @@ def fetch_html(url: str, timeout: int = 5) -> str:
         logger.error("Error al descargar %s: %s", url, e)
         return ""
 
-
-def ai_select_fields(news_html: str, url: str) -> dict | None:
-    """
-    Usa gpt-4o para identificar dinámicamente los campos relevantes en el HTML de una noticia.
-    Devuelve un dict con las claves: "title", "kicker", "link", "image_url".
-    Si falta alguna clave, se asigna None. Retorna None en caso de error.
-    """
+def ai_select_fields_openai(html: str, url: str, model: str = "gpt-3.5-turbo") -> dict | None:
     prompt = (
         "Eres un asistente experto en scraping de noticias.\n"
-        "Analiza el siguiente fragmento de HTML que contiene UNA noticia.\n"
-        "Identifica dinámicamente el Título, Kicker (volanta), Enlace (link a la nota), e Imagen principal.\n"
-        "Si algún campo no está presente, usa null.\n"
-        "Devolvé SOLO el resultado en JSON con las claves: "
-        "\"title\", \"kicker\", \"link\", \"image_url\".\n"
-        "No incluyas ningún otro texto en la respuesta.\n\n"
-        "Ejemplo de formato de salida:\n"
-        "{\n"
-        '  "title": "Título de la noticia",\n'
-        '  "kicker": "Volanta o subtítulo",\n'
-        '  "link": "https://www.ejemplo.com/noticia-completa",\n'
-        '  "image_url": "https://www.ejemplo.com/imagen.jpg"\n'
-        "}\n\n"
-        f"El link original de la nota es: {url}\n\n"
-        "HTML:\n"
-        "```html\n"
-        f"{news_html}\n"
-        "```"
+        "Extrae SOLO un JSON con las claves: title, kicker, link, image_url.\n"
+        f"URL: {url}\n"
+        "HTML:\n```html\n" + html + "\n```"
     )
-
     for attempt in range(3):
         try:
-            resp = openai.chat.completions.create(
-                model="gpt-4o",
+            resp = openai.ChatCompletion.create(
+                model=model,
                 messages=[
-                    {"role": "system", "content": "Eres un asistente experto en análisis de HTML para extracción de datos."},
-                    {"role": "user", "content": prompt}
+                    {"role": "system", "content": "Eres un asistente..."}, 
+                    {"role": "user",   "content": prompt}
                 ],
                 temperature=0.0,
                 timeout=10
             )
             content = resp.choices[0].message.content.strip()
-            # Eliminar posibles bloques de código ```json ... ```
             content = re.sub(r"^```(?:json)?|```$", "", content, flags=re.MULTILINE).strip()
             data = json.loads(content)
-            # Asegurar que existan todas las keys
-            for key in ("title", "kicker", "link", "image_url"):
+            for key in ("title","kicker","link","image_url"):
                 data.setdefault(key, None)
+            logger.info("Datos extraídos con OpenAI")
             return data
-
-        except openai.APIError as e:
-            logger.warning("APIError en intento %d: %s", attempt + 1, e)
-            if attempt < 2:
-                time.sleep(2 ** attempt)
-                continue
-            logger.error("No se pudo completar la petición a la API tras 3 intentos.")
-            return None
-        except json.JSONDecodeError:
-            logger.error("La respuesta de la API no es un JSON válido:\n%s", content)
-            return None
         except Exception as e:
-            logger.exception("Error inesperado al llamar a la API:")
-            return None
+            logger.warning("OpenAI fallo (intento %d): %s", attempt+1, e)
+            time.sleep(2**attempt)
+    return None
 
+def ai_select_fields_claude(html: str, url: str, model: str = "claude-2.1") -> dict | None:
+    if claude is None:
+        return None
+    prompt = (
+        f"{anthropic.HUMAN_PROMPT}"
+        "Eres un asistente experto en scraping de noticias.\n"
+        "Devuelve SOLO un JSON con keys: title, kicker, link, image_url.\n"
+        f"URL: {url}\n"
+        "HTML:\n```html\n" + html + "\n```"
+        f"{anthropic.AI_PROMPT}"
+    )
+    try:
+        resp = claude.completions.create(
+            model=model,
+            prompt=prompt,
+            max_tokens_to_sample=512,
+            temperature=0.0
+        )
+        content = resp.completion.strip()
+        data = json.loads(content)
+        for key in ("title","kicker","link","image_url"):
+            data.setdefault(key, None)
+        logger.info("Datos extraídos con Claude")
+        return data
+    except Exception as e:
+        logger.warning("Claude fallo: %s", e)
+        return None
 
-def scrape_news_data(url: str) -> dict | None:
-    """
-    Wrapper para descargar HTML + extraer campos con GPT.
-    Retorna el dict con title, kicker, link e image_url, o None si falla.
-    """
+def fallback_parse(html: str, url: str) -> dict:
+    soup = BeautifulSoup(html, "html.parser")
+    title  = soup.find("h1")
+    kicker = soup.find("p")
+    link   = soup.find("a", href=True)
+    img    = soup.find("img", src=True)
+    data = {
+        "title":  title.get_text(strip=True) if title else None,
+        "kicker": kicker.get_text(strip=True) if kicker else None,
+        "link":   link["href"] if link else url,
+        "image_url": img["src"] if img else None
+    }
+    logger.info("Datos extraídos con fallback HTML")
+    return data
+
+def scrape_news_data(url: str) -> dict:
     html = fetch_html(url)
     if not html:
-        logger.error("No se pudo obtener el HTML de %s", url)
-        return None
-    return ai_select_fields(html, url)
+        logger.error("No se pudo descargar %s", url)
+        return fallback_parse("", url)
+
+    # 1. Intento OpenAI
+    data = ai_select_fields_openai(html, url)
+    if data:
+        return data
+
+    # 2. Intento Claude
+    data = ai_select_fields_claude(html, url)
+    if data:
+        return data
+
+    # 3. Fallback
+    return fallback_parse(html, url)
