@@ -1,4 +1,4 @@
-## 📰 Yogonet Scraper – IA + Python + BigQuery + Railway
+## 📰 Yogonet Scraper – IA + Python + BigQuery + Railway ESPAÑOL
 
 Este proyecto automatiza el scraping de noticias de Yogonet utilizando un enfoque inteligente basado en IA (OpenAI GPT-4o) para identificar dinámicamente los campos clave de cada nota (**Título, Kicker, Imagen, Link**), procesa la información y la carga en una tabla de Google BigQuery.
 
@@ -143,6 +143,151 @@ Esto sucede si excediste la cuota de Openai o Claude, debes mejorar el plan.
 
 
 
+
+
+
+## 📰 Yogonet Scraper – IA + Python + BigQuery + Railway English
+
+This project automates Yogonet news scraping using an intelligent AI-based approach (OpenAI GPT-4o) to dynamically identify the key fields of each note
+(**Título, Kicker, Imagen, Link**), processes the information and loads it into a Google BigQuery table.
+
+- **Reference deployment:** Railway (evita problemas de facturación de GCP)
+- **Decoupled architecture:** everything runs in Docker, it can be adapted to Cloud Run.
+
+---
+Chat I worked with (in spanish):
+* https://chatgpt.com/share/6895028e-a9cc-8000-8446-3d7429ac2086
+---
+
+## 📂 Project structure
+
+```plaintext
+yogonet-scraper/
+│
+├── app/
+│   ├── main.py              # Entry point, orchestrate everything
+│   ├── scraper.py           # AI-driven scraping with OpenAI
+│   ├── processor.py         # Data processing
+│   ├── bq_loader.py         # Embed in BigQuery
+│
+├── requirements.txt         #Python dependencies
+├── Dockerfile               # Docker image for Railway/Cloud Run
+├── README.md                # (This file)
+```
+---
+
+### 🚀 How to run the scraper
+
+#### 1. Prerequisites
+
+To start this project, you will need the following:
+
+* A Google Cloud account with a project and a BigQuery table already created.
+* Google Cloud Service Account credentials in JSON format.
+* An OpenAI API Key (GPT-4o).
+* A Railway account (it's free, no credit card required).
+
+#### 2. Configuración de variables de entorno
+
+You must set two environment variables for the project to work:
+
+* **`GCP_CREDS_JSON`**: The full content of your Google Cloud credentials (Service Account) JSON file.
+* **`OPENAI_API_KEY`**: Your OpenAI API Key.
+* **`ANTHROPIC_API_KEY`**: Your Claude API Key.
+  
+These variables are loaded in the Railway configuration.
+
+<img width="829" height="228" alt="image" src="https://github.com/user-attachments/assets/cc8041c9-7ae4-440c-b2ae-a582f3c375ea" />
+<img width="824" height="234" alt="image" src="https://github.com/user-attachments/assets/64176f47-c706-4bb5-a1d9-592014520749" />
+<img width="799" height="213" alt="image" src="https://github.com/user-attachments/assets/661b1e16-e173-4634-8d12-9eab70ba6bd2" />
+<img width="466" height="59" alt="image" src="https://github.com/user-attachments/assets/5d4cf209-91e2-494c-96dd-c5843e8ee552" />
+
+
+#### 3. Automatic deployment on Railway
+
+1. Upload this repository to **GitHub**.
+2. In Railway, click **New Project** and then **Deploy from GitHub Repo**.
+3. Select your repository. Railway will detect the **Dockerfile** and do the _build_ automatically.
+4. Configure the environment variables in **Settings > Variables**. Paste the contents of your JSON into `GCP_CREDS_JSON` and your OpenAI key into `OPENAI_API_KEY`.
+5. Railway will do the _deploy_ automatically. The _script_ will run and load the data into BigQuery. You can check the progress and results in the **View logs** option of the _dashboard_.
+
+#### 4. Local execution
+
+If you prefer to run _scraper_ on your local machine, follow these steps:
+
+1. Install Python dependencies:
+    ```bash
+    pip install -r requirements.txt
+    ```
+2. Export the environment variables in your terminal:
+    ```bash
+    export GCP_CREDS_JSON="$(cat /path/to/credenciales.json)"
+    export OPENAI_API_KEY="sk-...."
+    ```
+3. Run the main _script_:
+    ```bash
+    python app/main.py
+    ```
+
+#### 5. Deploy to Cloud Run
+
+This project is 100% compatible with Google Cloud Run. Simply upload the Docker image to Google Artifact Registry or Docker Hub and deploy it to Cloud Run. You will need to configure the `GCP_CREDS_JSON` and `OPENAI_API_KEY` environment variables in the Cloud Run service, the same way you would in Railway.
+
+```plaintext
+#!/bin/bash
+docker build -t gcr.io/tu-proyecto/tu-imagen .
+docker push gcr.io/tu-proyecto/tu-imagen
+gcloud run deploy tu-servicio --image gcr.io/tu-proyecto/tu-imagen --platform managed --region us-central1
+```
+
+
+
+
+---
+### How to change the URL of the news to be scraped?
+
+By default, the URL of the news to be scraped is defined in app/main.py in the news_url variable.
+You can edit that value before running the script to test different Yogonet news.
+
+If you want to make the scraper interactive, replace the line:
+```
+news_url = "https://www.yogonet.com/international/news/....."
+
+```
+
+---
+
+### ⚙️ Key dependencies
+
+To install, run:
+```
+pip install -r requirements.txt
+```
+
+The project is based on the following Python libraries:
+
+| Paquete                  | Descripción                                             |
+|--------------------------|---------------------------------------------------------|
+| `requests`               | HTML download from the web.                          |
+| `beautifulsoup4`         | HTML parsing and data extraction.                   |
+| `openai`                 | Interaction with GPT-4o for dynamic extraction.        |
+| `anthropic`              | Interaction with Claude to fallback when GPT doesn't work. |
+| `pandas`                 | Data processing and transformation.                |
+| `pyarrow`                | DataFrames serialization and BQ support.    |
+| `pandas-gbq`             | Loading DataFrames directly into BigQuery.           |
+| `google-cloud-bigquery`  | Official client for BigQuery table management.     |
+
+---
+### Model
+
+The code uses the OpenAI "gpt-4o" and Claude "claude-2.1" model.
+---
+
+### Error 429 "You exceeded your current quota, please check your plan and billing details".
+
+This happens if you exceeded the Openai or Claude quota, you must upgrade the plan.
+
+---
 
 
 
