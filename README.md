@@ -147,6 +147,11 @@ Esto sucede si excediste la cuota de Openai o Claude, debes mejorar el plan.
 
 
 
+
+
+
+
+
 ## 📰 Yogonet Scraper – IA + Python + BigQuery + Railway English
 
 This project automates Yogonet news scraping using an intelligent AI-based approach (OpenAI GPT-4o) to dynamically identify the key fields of each note
@@ -289,6 +294,7 @@ The code uses the OpenAI "gpt-4o" and Claude "claude-2.1" model.
 This happens if you exceeded the Openai or Claude quota, you must upgrade the plan.
 
 ---
+
 
 
 
