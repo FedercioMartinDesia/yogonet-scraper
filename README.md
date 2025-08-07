@@ -1,4 +1,4 @@
-# 📰 Yogonet Scraper – IA + Python + BigQuery + Railway
+<img width="829" height="228" alt="image" src="https://github.com/user-attachments/assets/e0c21a9d-1853-4ebe-b454-7a890dc4ef21" /># 📰 Yogonet Scraper – IA + Python + BigQuery + Railway
 
 Este proyecto automatiza el scraping de noticias de Yogonet utilizando un enfoque inteligente basado en IA (OpenAI GPT-4o) para identificar dinámicamente los campos clave de cada nota (**Título, Kicker, Imagen, Link**), procesa la información y la carga en una tabla de Google BigQuery.
 
@@ -43,6 +43,12 @@ Debes configurar dos variables de entorno para que el proyecto funcione:
 * **`OPENAI_API_KEY`**: Tu API Key de OpenAI.
 
 Estas variables se cargan en la configuración de Railway.
+
+<img width="829" height="228" alt="image" src="https://github.com/user-attachments/assets/cc8041c9-7ae4-440c-b2ae-a582f3c375ea" />
+<img width="824" height="234" alt="image" src="https://github.com/user-attachments/assets/64176f47-c706-4bb5-a1d9-592014520749" />
+<img width="799" height="213" alt="image" src="https://github.com/user-attachments/assets/661b1e16-e173-4634-8d12-9eab70ba6bd2" />
+<img width="466" height="59" alt="image" src="https://github.com/user-attachments/assets/5d4cf209-91e2-494c-96dd-c5843e8ee552" />
+
 
 #### 3. Despliegue automático en Railway
 
@@ -106,6 +112,7 @@ El proyecto se basa en las siguientes librerías de Python:
 * `openai`: Para la selección dinámica de campos con GPT-4o.
 * `pandas`, `pyarrow`, `pandas-gbq`: Para el procesamiento de datos y la carga en BigQuery.
 * `google-cloud-bigquery`: Para la conexión y la gestión de BigQuery.
+
 
 
 
