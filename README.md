@@ -74,6 +74,16 @@ Si prefieres ejecutar el _scraper_ en tu máquina local, sigue estos pasos:
 
 Este proyecto es 100% compatible con Google Cloud Run. Simplemente sube la imagen Docker a Google Artifact Registry o Docker Hub y despliégala en Cloud Run. Deberás configurar las variables de entorno `GCP_CREDS_JSON` y `OPENAI_API_KEY` en el servicio de Cloud Run, de la misma manera que lo harías en Railway.
 
+```plaintext
+#!/bin/bash
+docker build -t gcr.io/tu-proyecto/tu-imagen .
+docker push gcr.io/tu-proyecto/tu-imagen
+gcloud run deploy tu-servicio --image gcr.io/tu-proyecto/tu-imagen --platform managed --region us-central1
+```
+
+
+
+
 ---
 
 ### ⚙️ Dependencias clave
@@ -84,4 +94,5 @@ El proyecto se basa en las siguientes librerías de Python:
 * `openai`: Para la selección dinámica de campos con GPT-4o.
 * `pandas`, `pyarrow`, `pandas-gbq`: Para el procesamiento de datos y la carga en BigQuery.
 * `google-cloud-bigquery`: Para la conexión y la gestión de BigQuery.
+
 
