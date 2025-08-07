@@ -109,10 +109,15 @@ news_url = "https://www.yogonet.com/international/news/....."
 
 El proyecto se basa en las siguientes librerías de Python:
 
-* `requests` y `beautifulsoup4`: Para la descarga y el parseo de HTML.
-* `openai`: Para la selección dinámica de campos con GPT-4o.
-* `pandas`, `pyarrow`, `pandas-gbq`: Para el procesamiento de datos y la carga en BigQuery.
-* `google-cloud-bigquery`: Para la conexión y la gestión de BigQuery.
+| Paquete                  | Descripción                                          |
+|--------------------------|------------------------------------------------------|
+| `requests`               | Descarga de HTML desde la web.                       |
+| `beautifulsoup4`         | Parseo y extracción de datos de HTML.                |
+| `openai`                 | Interacción con GPT-4o para extracción dinámica.     |
+| `pandas`                 | Procesamiento y transformación de datos.             |
+| `pyarrow`                | Serialización de DataFrames y compatibilidad con BQ. |
+| `pandas-gbq`             | Carga de DataFrames directamente en BigQuery.        |
+| `google-cloud-bigquery`  | Cliente oficial para gestión de tablas en BigQuery.  |
 
 ---
 ### Modelo
@@ -124,6 +129,7 @@ El código utiliza el modelo de OpenAI "gpt-4o" y Claude "claude-2.1".
 ### Error 429 "You exceeded your current quota, please check your plan and billing details".
 
 Esto sucede si excediste la cuota de Openai o Claude, debes mejorar el plan.
+
 
 
 
