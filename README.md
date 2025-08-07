@@ -1,4 +1,4 @@
-## 📰 Yogonet Scraper – IA + Python + BigQuery + Railway ESPAÑOL
+## 📰 Yogonet Scraper – IA + Python + BigQuery + Railway Español
 
 Este proyecto automatiza el scraping de noticias de Yogonet utilizando un enfoque inteligente basado en IA (OpenAI GPT-4o) para identificar dinámicamente los campos clave de cada nota (**Título, Kicker, Imagen, Link**), procesa la información y la carga en una tabla de Google BigQuery.
 
@@ -142,6 +142,8 @@ Esto sucede si excediste la cuota de Openai o Claude, debes mejorar el plan.
 
 
 
+---
+---
 
 
 
@@ -288,6 +290,7 @@ The code uses the OpenAI "gpt-4o" and Claude "claude-2.1" model.
 This happens if you exceeded the Openai or Claude quota, you must upgrade the plan.
 
 ---
+
 
 
 
