@@ -68,7 +68,6 @@ def ai_select_fields(news_html: str, url: str) -> dict | None:
         "```"
     )
 
-    # Intentar hasta 3 reintentos en caso de errores transitorios
     for attempt in range(3):
         try:
             resp = openai.chat.completions.create(
@@ -104,16 +103,13 @@ def ai_select_fields(news_html: str, url: str) -> dict | None:
             return None
 
 
-if __name__ == "__main__":
-    # Ejemplo de uso
-    sample_url = "https://ejemplo.com/noticia-ejemplo"
-    sample_html = fetch_html(sample_url)
-    if not sample_html:
-        logger.error("No se pudo obtener el HTML de la URL de ejemplo.")
-        sys.exit(1)
-
-    extracted = ai_select_fields(sample_html, sample_url)
-    if extracted:
-        print(json.dumps(extracted, indent=2, ensure_ascii=False))
-    else:
-        logger.error("No se logró extraer los datos de la noticia.")
+def scrape_news_data(url: str) -> dict | None:
+    """
+    Wrapper para descargar HTML + extraer campos con GPT.
+    Retorna el dict con title, kicker, link e image_url, o None si falla.
+    """
+    html = fetch_html(url)
+    if not html:
+        logger.error("No se pudo obtener el HTML de %s", url)
+        return None
+    return ai_select_fields(html, url)
