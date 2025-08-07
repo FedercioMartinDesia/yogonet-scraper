@@ -113,8 +113,16 @@ El proyecto se basa en las siguientes librerías de Python:
 * `pandas`, `pyarrow`, `pandas-gbq`: Para el procesamiento de datos y la carga en BigQuery.
 * `google-cloud-bigquery`: Para la conexión y la gestión de BigQuery.
 
+---
+### Modelo
 
+El código utiliza el modelo de OpenAI "gpt-4o"
 
+---
+
+### Error 429 "You exceeded your current quota, please check your plan and billing details".
+
+Esto sucede si excediste la cuota de chatgpt, debes mejorar el plan.
 
 
 
