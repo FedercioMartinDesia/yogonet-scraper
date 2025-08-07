@@ -21,7 +21,7 @@ yogonet-scraper/
 ├── requirements.txt         # Dependencias Python
 ├── Dockerfile               # Imagen Docker para Railway/Cloud Run
 ├── README.md                # (Este archivo)
-
+```
 ---
 
 ### 🚀 Cómo ejecutar el scraper
@@ -84,3 +84,4 @@ El proyecto se basa en las siguientes librerías de Python:
 * `openai`: Para la selección dinámica de campos con GPT-4o.
 * `pandas`, `pyarrow`, `pandas-gbq`: Para el procesamiento de datos y la carga en BigQuery.
 * `google-cloud-bigquery`: Para la conexión y la gestión de BigQuery.
+
