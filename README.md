@@ -48,6 +48,7 @@ Debes configurar dos variables de entorno para que el proyecto funcione:
   
 Estas variables se cargan en la configuración de Railway.
 
+
 <img width="829" height="228" alt="image" src="https://github.com/user-attachments/assets/cc8041c9-7ae4-440c-b2ae-a582f3c375ea" />
 <img width="824" height="234" alt="image" src="https://github.com/user-attachments/assets/64176f47-c706-4bb5-a1d9-592014520749" />
 <img width="799" height="213" alt="image" src="https://github.com/user-attachments/assets/661b1e16-e173-4634-8d12-9eab70ba6bd2" />
@@ -63,7 +64,10 @@ Estas variables se cargan en la configuración de Railway.
 5.  Railway hará el _deploy_ automáticamente. El _script_ se ejecutará y cargará los datos en BigQuery. Puedes verificar el progreso y los resultados en la opción **View logs** del _dashboard_.
 
 #### Resultado:
+
+Railway
 <img width="693" height="120" alt="image" src="https://github.com/user-attachments/assets/018b25f9-e5bc-4b76-a79a-fb9d91a09075" />
+BigQuery
 <img width="262" height="57" alt="image" src="https://github.com/user-attachments/assets/891119d8-9fe9-4064-9ce7-156968dce5d9" />
 <img width="360" height="217" alt="image" src="https://github.com/user-attachments/assets/21c574fc-b825-4b53-a9a2-9e7b41de52ac" />
 <img width="1022" height="121" alt="image" src="https://github.com/user-attachments/assets/767bcbc3-50bf-4242-a78a-68afd4cd8982" />
@@ -295,6 +299,7 @@ The code uses the OpenAI "gpt-4o" and Claude "claude-2.1" model.
 This happens if you exceeded the Openai or Claude quota, you must upgrade the plan.
 
 ---
+
 
 
 
