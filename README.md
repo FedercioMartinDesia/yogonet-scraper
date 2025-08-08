@@ -62,6 +62,15 @@ Estas variables se cargan en la configuración de Railway.
 4.  Configura las variables de entorno en **Settings > Variables**. Pega el contenido de tu JSON en `GCP_CREDS_JSON` y tu clave de OpenAI en `OPENAI_API_KEY`.
 5.  Railway hará el _deploy_ automáticamente. El _script_ se ejecutará y cargará los datos en BigQuery. Puedes verificar el progreso y los resultados en la opción **View logs** del _dashboard_.
 
+#### Resultado:
+<img width="693" height="120" alt="image" src="https://github.com/user-attachments/assets/018b25f9-e5bc-4b76-a79a-fb9d91a09075" />
+<img width="262" height="57" alt="image" src="https://github.com/user-attachments/assets/891119d8-9fe9-4064-9ce7-156968dce5d9" />
+<img width="360" height="217" alt="image" src="https://github.com/user-attachments/assets/21c574fc-b825-4b53-a9a2-9e7b41de52ac" />
+<img width="1022" height="121" alt="image" src="https://github.com/user-attachments/assets/767bcbc3-50bf-4242-a78a-68afd4cd8982" />
+
+
+
+
 #### 4. Ejecución local
 
 Si prefieres ejecutar el _scraper_ en tu máquina local, sigue estos pasos:
@@ -286,6 +295,7 @@ The code uses the OpenAI "gpt-4o" and Claude "claude-2.1" model.
 This happens if you exceeded the Openai or Claude quota, you must upgrade the plan.
 
 ---
+
 
 
 
