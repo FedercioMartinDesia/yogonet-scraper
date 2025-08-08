@@ -75,8 +75,7 @@ Estas variables se cargan en la configuración de Railway.
 <img width="360" height="217" alt="image" src="https://github.com/user-attachments/assets/21c574fc-b825-4b53-a9a2-9e7b41de52ac" />
 <img width="1022" height="121" alt="image" src="https://github.com/user-attachments/assets/767bcbc3-50bf-4242-a78a-68afd4cd8982" />
 
-
-
+---
 
 #### 4. Ejecución local
 
@@ -225,6 +224,21 @@ These variables are loaded in the Railway configuration.
 4. Configure the environment variables in **Settings > Variables**. Paste the contents of your JSON into `GCP_CREDS_JSON` and your OpenAI key into `OPENAI_API_KEY`.
 5. Railway will do the _deploy_ automatically. The _script_ will run and load the data into BigQuery. You can check the progress and results in the **View logs** option of the _dashboard_.
 
+
+#### Result of Railway execution writing the data to BigQuery:
+
+#### Railway
+
+<img width="693" height="120" alt="image" src="https://github.com/user-attachments/assets/018b25f9-e5bc-4b76-a79a-fb9d91a09075" />
+
+#### BigQuery
+
+<img width="262" height="57" alt="image" src="https://github.com/user-attachments/assets/891119d8-9fe9-4064-9ce7-156968dce5d9" />
+<img width="360" height="217" alt="image" src="https://github.com/user-attachments/assets/21c574fc-b825-4b53-a9a2-9e7b41de52ac" />
+<img width="1022" height="121" alt="image" src="https://github.com/user-attachments/assets/767bcbc3-50bf-4242-a78a-68afd4cd8982" />
+
+---
+
 #### 4. Local execution
 
 If you prefer to run _scraper_ on your local machine, follow these steps:
@@ -302,6 +316,7 @@ The code uses the OpenAI "gpt-4o" and Claude "claude-2.1" model.
 This happens if you exceeded the Openai or Claude quota, you must upgrade the plan.
 
 ---
+
 
 
 
